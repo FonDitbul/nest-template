@@ -12,7 +12,7 @@ export class UserEntity extends BaseEntity {
   })
   provider: string | null;
 
-  @Column({ unique: true, length: 100, comment: '이메일 = id' })
+  @Column({ unique: true, length: 100, comment: '이메일' })
   email: string;
 
   @Column({
