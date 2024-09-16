@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { DataSource } from 'typeorm';
 import { addTransactionalDataSource } from 'typeorm-transactional';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { UserEntity } from '../entity/user.entity';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
         username: configService.get('DATABASE_USERNAME'),
         password: configService.get('DATABASE_PASSWORD'),
         database: configService.get('DATABASE_DATABASE'),
-        entities: [],
+        entities: [UserEntity],
         timezone: 'local',
         namingStrategy: new SnakeNamingStrategy(),
         logging: configService.get('DATABASE_LOGGING') === 'true',
