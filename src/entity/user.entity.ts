@@ -7,6 +7,7 @@ export class UserEntity extends BaseEntity {
   id: number;
 
   @Column({
+    type: 'varchar',
     nullable: true,
     comment: 'social 로그인 방식 ex) GOOGLE, APPLE',
   })
