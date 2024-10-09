@@ -9,13 +9,14 @@ import { DateFormatStr } from '../../common/domain/date.format.str';
 
 @Injectable()
 export class LoginTokenValidatorJsonwebtoken implements ILoginTokenValidator {
-  constructor(private configService: ConfigService) {}
+  constructor(private readonly configService: ConfigService) {}
 
   private transformUserInfo(payload: JwtPayload): ILoginUserInfo {
     return {
       id: payload.id,
       name: payload.name,
       email: payload.email,
+      role: payload.role,
     };
   }
 
@@ -60,7 +61,7 @@ export class LoginTokenValidatorJsonwebtoken implements ILoginTokenValidator {
     } catch (e) {
       if (e) {
         if (e instanceof TokenExpiredError) {
-          throw new UnauthorizedException('토큰만료');
+          throw new UnauthorizedException('토큰 만료');
         }
         throw new UnauthorizedException('토큰 에러');
       }
