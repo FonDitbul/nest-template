@@ -6,23 +6,24 @@ import { Readable } from 'stream';
 import { join } from 'path';
 import process from 'node:process';
 import fs from 'node:fs';
+import { awsS3AccessKeyId, awsS3Bucket, awsS3Region, awsS3SecretAccessKey } from '../../common/domain/env.const';
 
 @Injectable()
 export class FileStorageS3 implements IFileStorage {
   private s3Client: S3Client;
 
-  constructor(private configService: ConfigService) {
+  constructor(private readonly configService: ConfigService) {
     this.s3Client = new S3Client({
-      region: this.configService.getOrThrow('AWS_S3_REGION'),
+      region: this.configService.getOrThrow(awsS3Region),
       credentials: {
-        accessKeyId: this.configService.getOrThrow('AWS_S3_ACCESS_KEY_ID'),
-        secretAccessKey: this.configService.getOrThrow('AWS_S3_SECRET_ACCESS_KEY'),
+        accessKeyId: this.configService.getOrThrow(awsS3AccessKeyId),
+        secretAccessKey: this.configService.getOrThrow(awsS3SecretAccessKey),
       },
     });
   }
 
   async uploadImageFile(file: Express.Multer.File): Promise<IFileUploadFileReturn> {
-    const bucketName = this.configService.getOrThrow('AWS_S3_BUCKET');
+    const bucketName = this.configService.getOrThrow(awsS3Bucket);
 
     const uploadFileName = `image/${Date.now()}-${file.originalname}`;
 
@@ -47,7 +48,7 @@ export class FileStorageS3 implements IFileStorage {
   }
 
   async downloadFileToLocal(downloadPath: string): Promise<string> {
-    const bucketName = this.configService.getOrThrow('AWS_S3_BUCKET');
+    const bucketName = this.configService.getOrThrow(awsS3Bucket);
 
     const command = new GetObjectCommand({
       Bucket: bucketName,

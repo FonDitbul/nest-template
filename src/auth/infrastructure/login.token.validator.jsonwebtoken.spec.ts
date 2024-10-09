@@ -2,6 +2,11 @@ import { ILoginUserInfo } from '../interface/login.user';
 import { LoginTokenValidatorJsonwebtoken } from './login.token.validator.jsonwebtoken';
 import { mock, MockProxy } from 'jest-mock-extended';
 import { MockConfigService } from '../../common/test/config.service';
+import {
+  accessTokenExpireSecond as envAccessTokenExpireSecond,
+  refreshTokenExpireSecond as envRefreshTokenExpireSecond,
+  tokenSecretKey,
+} from '../../common/domain/env.const';
 
 describe('login token validator With jsonwebtoken 테스트', () => {
   const configService: MockProxy<MockConfigService> = mock<MockConfigService>();
@@ -15,9 +20,9 @@ describe('login token validator With jsonwebtoken 테스트', () => {
       name: 'name',
       role: 'user',
     };
-    configService.getOrThrow.calledWith('TOKEN_SECRET_KEY').mockReturnValue('SECRET');
-    configService.getOrThrow.calledWith('ACCESS_TOKEN_EXPIRE_SECOND').mockReturnValue('3600');
-    configService.getOrThrow.calledWith('REFRESH_TOKEN_EXPIRE_SECOND').mockReturnValue('36000');
+    configService.getOrThrow.calledWith(tokenSecretKey).mockReturnValue('SECRET');
+    configService.getOrThrow.calledWith(envAccessTokenExpireSecond).mockReturnValue('3600');
+    configService.getOrThrow.calledWith(envRefreshTokenExpireSecond).mockReturnValue('36000');
 
     const result = sut.issuance(givenLoginUser);
 

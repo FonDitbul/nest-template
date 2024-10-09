@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LoggerMiddleware } from './common/api/logger.middleware';
 import { AuthModule } from './auth/auth.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { uploadImageFilePath } from './common/domain/env.const';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { MulterModule } from '@nestjs/platform-express';
     MulterModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        dest: configService.getOrThrow('UPLOAD_IMAGE_FILE_PATH'),
+        dest: configService.getOrThrow(uploadImageFilePath),
       }),
     }),
     AuthModule,

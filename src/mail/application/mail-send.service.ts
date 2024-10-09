@@ -3,19 +3,20 @@ import { Injectable } from '@nestjs/common';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import { createTransport, Transporter } from 'nodemailer';
 import { IMailSendOption } from '../interface/mail.send.option';
+import { mailAuthId, mailAuthPassword, mailHost, mailPort } from '../../common/domain/env.const';
 
 @Injectable()
 export class MailSendService {
   private transporter: Transporter<SMTPTransport.SentMessageInfo>;
 
-  constructor(private configService: ConfigService) {
+  constructor(private readonly configService: ConfigService) {
     this.transporter = createTransport({
-      host: this.configService.get('MAIL_HOST'),
-      port: +this.configService.get('MAIL_PORT'),
+      host: this.configService.getOrThrow(mailHost),
+      port: +this.configService.getOrThrow<number>(mailPort),
       secure: false,
       auth: {
-        user: this.configService.get('MAIL_AUTH_ID'),
-        pass: this.configService.get('MAIL_AUTH_PASSWORD'),
+        user: this.configService.getOrThrow(mailAuthId),
+        pass: this.configService.getOrThrow(mailAuthPassword),
       },
     });
   }
