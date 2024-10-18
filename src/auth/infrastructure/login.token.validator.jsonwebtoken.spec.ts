@@ -18,7 +18,6 @@ describe('login token validator With jsonwebtoken 테스트', () => {
       id: 1,
       email: 'test@test.com',
       name: 'name',
-      role: 'user',
     };
     configService.getOrThrow.calledWith(tokenSecretKey).mockReturnValue('SECRET');
     configService.getOrThrow.calledWith(envAccessTokenExpireSecond).mockReturnValue('3600');

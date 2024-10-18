@@ -77,7 +77,6 @@ export class UserService {
       id: user.id,
       name: user.name,
       email: user.email,
-      role: 'user',
     };
 
     return { ...this.loginTokenValidator.issuance(loginUserInfo), name: user.name };

@@ -5,7 +5,7 @@ import { LoginTokenValidatorJsonwebtoken } from '../infrastructure/login.token.v
 export class AuthUserAuthorizationGuard implements CanActivate {
   constructor(
     @Inject('ILoginTokenValidator')
-    private readonly loginTokenValidator: LoginTokenValidatorJsonwebtoken,
+    private loginTokenValidator: LoginTokenValidatorJsonwebtoken,
   ) {}
 
   canActivate(context: ExecutionContext): boolean {
