@@ -8,6 +8,7 @@ import { ILoginToken } from '../../auth/interface/token';
 import { UserEntity } from '../../entity/user.entity';
 import { Repository } from 'typeorm';
 import { ILoginUserInfo } from '../../auth/interface/login.user';
+import { UserEntityTest } from '../../../test/user.entity.test';
 
 jest.mock('typeorm-transactional', () => ({
   Transactional: () => () => ({}),
@@ -29,6 +30,7 @@ describe('user login service Test', () => {
   describe('isExistEmail 중복 이메일 테스트', () => {
     it('중복된 이메일이 존재할 경우 true', async () => {
       userRepository.findOne.mockResolvedValue({
+        ...UserEntityTest(),
         id: 0,
         name: 'name',
         email: 'test@gmail.com',
@@ -79,6 +81,7 @@ describe('user login service Test', () => {
       };
 
       userRepository.findOne.mockResolvedValue({
+        ...UserEntityTest(),
         id: 0,
         name: 'name',
         email: 'test@gmail.com',
@@ -128,6 +131,7 @@ describe('user login service Test', () => {
       };
 
       userRepository.findOne.mockResolvedValue({
+        ...UserEntityTest(),
         id: 0,
         name: 'name',
         email: 'test@gmail.com',
@@ -155,6 +159,7 @@ describe('user login service Test', () => {
       };
 
       userRepository.findOne.mockResolvedValue({
+        ...UserEntityTest(),
         id: 0,
         name: 'name',
         email: 'test@gmail.com',
@@ -192,6 +197,7 @@ describe('user login service Test', () => {
       loginTokenValidator.validateByToken.calledWith(givenTokenString).mockReturnValue(givenUserInfo);
 
       userRepository.findOne.mockResolvedValue({
+        ...UserEntityTest(),
         id: 0,
         name: 'name',
         email: 'test@gmail.com',
@@ -265,6 +271,7 @@ describe('user login service Test', () => {
 
       loginTokenValidator.validateByToken.calledWith(givenTokenString).mockReturnValue(givenUserInfo);
       userRepository.findOne.mockResolvedValue({
+        ...UserEntityTest(),
         id: 0,
         name: 'name',
         email: 'test@gmail.com',
